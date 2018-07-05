@@ -6,20 +6,12 @@ const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport')
-const config = require('./config/database')
 
-mongoose.connect(config.database);
-const db = mongoose.connection;
+const db = require('./config/database').mongoURI;
 
-// Check connection
-db.once('open', function() {
-    console.log('Connected to MongoDB');
-})
-
-// Check for db errors
-db.on('error', function(err) {
-    console.log(err);
-});
+mongoose.connect(db)
+    .then(() => console.log('Database Connected...'))
+    .catch(err => console.log(err));
 
 // Initialise App
 const app = express();
@@ -102,8 +94,9 @@ const users = require('./routes/users');
 app.use('/articles', articles)
 app.use('/users', users)
 
-// Start Server
+// Start Server for Heroku deployment
 app.listen(process.env.PORT || 5000)
+// Start Server for local deployment
 // app.listen(3000, function(){
 //     console.log("Server started on port 3000...");
 // });

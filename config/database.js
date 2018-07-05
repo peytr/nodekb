@@ -1,4 +1,3 @@
 module.exports = {
-    database: 'mongodb://localhost:27017/nodekb',
-    secret: 'yoursecret'
+    mongoURI: 'mongodb://petec:pc30pc18ca13@ds125381.mlab.com:25381/node-knowledgebase'
 }
